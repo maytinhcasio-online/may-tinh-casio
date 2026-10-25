@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1c2838" />
+  <title>Máy tính Casio</title>
+  <style>
+    :root {
+      --frame: #2a3544;
+      --frame-top: #3d4c5e;
+      --frame-edge: #1a222c;
+      --lcd: #c5d4a8;
+      --lcd-dark: #a9ba8c;
+      --ink: #1a2612;
+      --fn: #3e4a58;
+      --fn-top: #556274;
+      --num: #e7ecef;
+      --op: #cfd6dd;
+      --shift: #f0c14b;
+      --alpha: #c4473a;
+      --ac: #7a3030;
+      --on: #3f6a48;
+      --eq: #3f6d8c;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 16px 10px 24px;
+      background:
+        radial-gradient(1200px 600px at 50% -10%, #4a5d73 0%, transparent 55%),
+        linear-gradient(180deg, #1b2430 0%, #0e1318 100%);
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: #e8edf3;
+    }
+
+    .page {
+      width: min(440px, 100%);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      text-align: center;
+      font-size: clamp(18px, 4vw, 22px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .subtitle {
+      margin: 0 0 16px;
+      text-align: center;
+      color: #9aabbd;
+      font-size: 13px;
+    }
+
+    .calc {
+      background:
+        linear-gradient(180deg, var(--frame-top) 0%, var(--frame) 22%, var(--frame-edge) 100%);
+      border-radius: 22px 22px 32px 32px;
+      padding: 16px 14px 18px;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.16),
+        0 22px 48px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 2px 8px 8px;
+      gap: 10px;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      font-size: 19px;
+    }
+
+    .model {
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.35;
+      color: #d5dee8;
+      letter-spacing: 0.04em;
+    }
+
+    .solar {
+      height: 20px;
+      margin: 0 8px 12px;
+      border-radius: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #1a2634 0 16px,
+        #243446 16px 18px
+      );
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .screen {
+      margin: 0 8px 14px;
+      min-height: 108px;
+      padding: 10px 12px 8px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #d3e0b8, var(--lcd) 40%, var(--lcd-dark));
+      color: var(--ink);
+      box-shadow:
+        0 0 0 3px #141b22,
+        inset 0 4px 10px rgba(0, 0, 0, 0.22);
+      font-family: "Courier New", ui-monospace, monospace;
+    }
+
+    .status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 16px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
+    }
+
+    .status span.on {
+      color: #13200c;
+    }
+
+    .expr {
+      min-height: 24px;
+      font-size: clamp(13px, 3.4vw, 16px);
+      word-break: break-all;
+    }
+
+    .result {
+      min-height: 38px;
+      font-size: clamp(24px, 7vw, 32px);
+      font-weight: 800;
+      text-align: right;
+      line-height: 1.15;
+    }
+
+    .result.error {
+      color: #6b1c1c;
+      font-size: clamp(22px, 6vw, 28px);
+    }
+
+    .pad {
+      display: grid;
+      gap: 7px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    button {
+      appearance: none;
+      position: relative;
+      border: 0;
+      min-height: 46px;
+      border-radius: 9px;
+      padding: 14px 2px 6px;
+      cursor: pointer;
+      color: #f4f7fb;
+      background: linear-gradient(180deg, var(--fn-top), var(--fn));
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow:
+        0 3px 0 #161c24,
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      transition: transform 70ms ease, filter 70ms ease, box-shadow 70ms ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button .shift-lab {
+      position: absolute;
+      top: 3px;
+      left: 5px;
+      font-size: 8px;
+      color: var(--shift);
+      font-weight: 800;
+    }
+
+    button .vn {
+      display: block;
+      font-size: 8px;
+      font-weight: 700;
+      opacity: 0.75;
+      letter-spacing: 0;
+    }
+
+    button:hover { filter: brightness(1.08); }
+
+    button:active,
+    button.pressed {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #161c24, inset 0 2px 6px rgba(0, 0, 0, 0.25);
+      filter: brightness(0.95);
+    }
+
+    button:focus-visible {
+      outline: 2px solid #f0c14b;
+      outline-offset: 2px;
+    }
+
+    .num {
+      background: linear-gradient(180deg, #f4f7fa, var(--num));
+      color: #182028;
+    }
+
+    .op {
+      background: linear-gradient(180deg, #dde3ea, var(--op));
+      color: #182028;
+    }
+
+    .shift { background: linear-gradient(180deg, #f6d36a, var(--shift)); color: #2a2108; }
+    .alpha { background: linear-gradient(180deg, #d85a4c, var(--alpha)); }
+    .ac { background: linear-gradient(180deg, #9a4040, var(--ac)); }
+    .on { background: linear-gradient(180deg, #54885c, var(--on)); }
+    .eq { background: linear-gradient(180deg, #5a8cb0, var(--eq)); }
+
+    .hint {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 12px;
+      color: #93a3b4;
+      line-height: 1.45;
+    }
+
+    .flash {
+      animation: lcdflash 180ms ease;
+    }
+
+    @keyframes lcdflash {
+      50% { filter: brightness(1.15); }
+    }
+
+    @media (max-width: 380px) {
+      button {
+        min-height: 42px;
+        font-size: 12px;
+        padding-top: 13px;
+      }
+      .calc { padding: 12px 10px 14px; border-radius: 16px 16px 24px 24px; }
+    }
+
+    @media (min-width: 720px) {
+      .page { width: 460px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Máy tính Casio</h1>
+    <p class="subtitle">Máy tính online Casio · FX khoa học</p>
+
+    <div class="calc" id="calc">
+      <div class="brand">
+        <div class="logo">CASIO</div>
+        <div class="model">fx-991ES PLUS<br />Máy tính online Casio</div>
+      </div>
+      <div class="solar" aria-hidden="true"></div>
+      <div class="screen" id="lcd" aria-live="polite">
+        <div class="status" id="status"></div>
+        <div class="expr" id="expr"></div>
+        <div class="result" id="result">0</div>
+      </div>
+
+      <div class="pad">
+        <div class="row">
+          <button class="shift" data-act="shift" type="button">SHIFT</button>
+          <button class="alpha" data-act="deg" type="button">Độ/Rad<span class="vn">chế độ góc</span></button>
+          <button data-insert="(" type="button"><span class="shift-lab">[</span>(</button>
+          <button data-insert=")" type="button"><span class="shift-lab">]</span>)</button>
+          <button class="on" data-act="ac" type="button">ON<span class="vn">bật / xóa</span></button>
+        </div>
+        <div class="row">
+          <button data-fn="inv" type="button"><span class="shift-lab">x!</span>1/x</button>
+          <button data-fn="pow" type="button"><span class="shift-lab">x√</span>x<sup>y</sup></button>
+          <button data-fn="sqr" type="button"><span class="shift-lab">x³</span>x²</button>
+          <button data-fn="sqrt" type="button"><span class="shift-lab">³√</span>√</button>
+          <button data-insert="%" type="button">%<span class="vn">phần trăm</span></button>
+        </div>
+        <div class="row">
+          <button data-fn="sin" type="button"><span class="shift-lab">sin⁻¹</span>sin</button>
+          <button data-fn="cos" type="button"><span class="shift-lab">cos⁻¹</span>cos</button>
+          <button data-fn="tan" type="button"><span class="shift-lab">tan⁻¹</span>tan</button>
+          <button data-fn="log" type="button"><span class="shift-lab">10ˣ</span>log</button>
+          <button data-fn="ln" type="button"><span class="shift-lab">eˣ</span>ln</button>
+        </div>
+        <div class="row">
+          <button data-insert="π" type="button"><span class="shift-lab">e</span>π</button>
+          <button data-insert="e" type="button">e</button>
+          <button data-act="ans" type="button">Ans<span class="vn">kết quả</span></button>
+          <button class="ac" data-act="del" type="button">DEL<span class="vn">xóa</span></button>
+          <button class="ac" data-act="ac" type="button">AC<span class="vn">xóa hết</span></button>
+        </div>
+        <div class="row">
+          <button class="num" data-insert="7" type="button">7</button>
+          <button class="num" data-insert="8" type="button">8</button>
+          <button class="num" data-insert="9" type="button">9</button>
+          <button class="op" data-insert="×" type="button">×</button>
+          <button class="op" data-insert="÷" type="button">÷</button>
+        </div>
+        <div class="row">
+          <button class="num" data-insert="4" type="button">4</button>
+          <button class="num" data-insert="5" type="button">5</button>
+          <button class="num" data-insert="6" type="button">6</button>
+          <button class="op" data-insert="+" type="button">+</button>
+          <button class="op" data-insert="−" type="button">−</button>
+        </div>
+        <div class="row">
+          <button class="num" data-insert="1" type="button">1</button>
+          <button class="num" data-insert="2" type="button">2</button>
+          <button class="num" data-insert="3" type="button">3</button>
+          <button class="num" data-insert="0" type="button">0</button>
+          <button class="num" data-insert="." type="button">.</button>
+        </div>
+        <div class="row">
+          <button data-insert="E" type="button">EXP<span class="vn">×10ⁿ</span></button>
+          <button data-act="neg" type="button">(−)<span class="vn">đổi dấu</span></button>
+          <button class="eq" data-act="eq" type="button" style="grid-column: span 3;">=<span class="vn">bằng</span></button>
+        </div>
+      </div>
+    </div>
+    <p class="hint">Bàn phím: số, + − * /, Enter = Bằng, Backspace = DEL, Esc = AC.<br />SHIFT để dùng hàm ngược (sin⁻¹, 10ˣ, eˣ…).</p>
+  </div>
+
+  <script>
+    const exprEl = document.getElementById("expr");
+    const resultEl = document.getElementById("result");
+    const statusEl = document.getElementById("status");
+    const lcd = document.getElementById("lcd");
+
+    const state = {
+      expr: "",
+      result: "0",
+      shift: false,
+      deg: true,
+      ans: 0,
+      overwrite: true,
+      error: false,
+    };
+
+    let audioCtx = null;
+
+    function beep() {
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const t = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "square";
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.045, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t);
+        osc.stop(t + 0.05);
+      } catch (_) { /* im lặng nếu trình duyệt chặn âm thanh */ }
+    }
+
+    function factorial(n) {
+      if (!Number.isFinite(n) || n < 0 || Math.floor(n) !== n || n > 170) return NaN;
+      let r = 1;
+      for (let i = 2; i <= n; i++) r *= i;
+      return r;
+    }
+
+    function toRad(x) { return state.deg ? (x * Math.PI) / 180 : x; }
+    function fromRad(x) { return state.deg ? (x * 180) / Math.PI : x; }
+
+    function tokenize(input) {
+      const src = input
+        .replaceAll("×", "*")
+        .replaceAll("÷", "/")
+        .replaceAll("−", "-")
+        .replaceAll("π", "pi")
+        .replaceAll("√", "sqrt");
+      const tokens = [];
+      const re = /\s*(pi|ans|sqrt|cbrt|sin|cos|tan|asin|acos|atan|log|ln|exp|abs|E|[A-Za-z]+|\d+(?:\.\d+)?|\.\d+|.)/gy;
+      let m;
+      while ((m = re.exec(src))) tokens.push(m[1]);
+      return tokens.filter(Boolean);
+    }
+
+    function parse(tokens) {
+      let i = 0;
+      const peek = () => tokens[i];
+      const eat = (t) => (peek() === t ? (i++, true) : false);
+
+      function expr() {
+        let left = term();
+        while (peek() === "+" || peek() === "-") {
+          const op = tokens[i++];
+          const right = term();
+          left = op === "+" ? left + right : left - right;
+        }
+        return left;
+      }
+
+      function term() {
+        let left = power();
+        while (peek() === "*" || peek() === "/") {
+          const op = tokens[i++];
+          const right = power();
+          left = op === "*" ? left * right : left / right;
+        }
+        return left;
+      }
+
+      function power() {
+        let left = unary();
+        if (peek() === "^") {
+          i++;
+          left = Math.pow(left, power());
+        }
+        return left;
+      }
+
+      function unary() {
+        if (eat("+")) return unary();
+        if (eat("-")) return -unary();
+        return postfix();
+      }
+
+      function postfix() {
+        let value = primary();
+        while (peek() === "!" || peek() === "%") {
+          if (eat("!")) value = factorial(value);
+          else {
+            eat("%");
+            value = value / 100;
+          }
+        }
+        return value;
+      }
+
+      function primary() {
+        const t = peek();
+        if (t === undefined) throw new Error("Lỗi");
+        if (/^\d/.test(t) || t[0] === ".") {
+          i++;
+          let n = Number(t);
+          if (peek() === "E") {
+            i++;
+            let sign = 1;
+            if (peek() === "+" || peek() === "-") sign = tokens[i++] === "-" ? -1 : 1;
+            const exp = peek();
+            if (!exp || !/^\d/.test(exp)) throw new Error("Lỗi");
+            i++;
+            n *= 10 ** (sign * Number(exp));
+          }
+          return n;
+        }
+        if (t === "pi") { i++; return Math.PI; }
+        if (t === "e") { i++; return Math.E; }
+        if (t === "ans") { i++; return state.ans; }
+        if (t === "(") {
+          i++;
+          const v = expr();
+          if (!eat(")")) throw new Error("Lỗi");
+          return v;
+        }
+        const fns = {
+          sqrt: Math.sqrt,
+          cbrt: Math.cbrt,
+          sin: (x) => Math.sin(toRad(x)),
+          cos: (x) => Math.cos(toRad(x)),
+          tan: (x) => Math.tan(toRad(x)),
+          asin: (x) => fromRad(Math.asin(x)),
+          acos: (x) => fromRad(Math.acos(x)),
+          atan: (x) => fromRad(Math.atan(x)),
+          log: (x) => Math.log10(x),
+          ln: Math.log,
+          exp: Math.exp,
+          abs: Math.abs,
+        };
+        if (fns[t]) {
+          i++;
+          eat("(");
+          const v = expr();
+          eat(")");
+          return fns[t](v);
+        }
+        throw new Error("Lỗi");
+      }
+
+      const value = expr();
+      if (i !== tokens.length) throw new Error("Lỗi");
+      return value;
+    }
+
+    function format(n) {
+      if (!Number.isFinite(n)) throw new Error("Lỗi");
+      if (Object.is(n, -0)) n = 0;
+      const abs = Math.abs(n);
+      if (abs !== 0 && (abs >= 1e10 || abs < 1e-9)) {
+        return n.toExponential(9).replace(/\.?0+e/, "e");
+      }
+      return String(Number(n.toPrecision(12)));
+    }
+
+    function render() {
+      const flags = [];
+      if (state.shift) flags.push('<span class="on">S</span>');
+      flags.push(state.deg ? '<span class="on">ĐỘ</span>' : '<span class="on">RAD</span>');
+      statusEl.innerHTML = flags.join("");
+      exprEl.textContent = state.expr;
+      resultEl.textContent = state.result;
+      resultEl.classList.toggle("error", state.error);
+    }
+
+    function flash() {
+      lcd.classList.remove("flash");
+      void lcd.offsetWidth;
+      lcd.classList.add("flash");
+    }
+
+    function insert(text) {
+      if (state.error || state.overwrite) {
+        state.expr = "";
+        state.error = false;
+        state.overwrite = false;
+      }
+      state.expr += text;
+      state.result = state.expr || "0";
+      state.shift = false;
+      render();
+    }
+
+    function evaluate() {
+      try {
+        const raw = state.expr || String(state.ans);
+        const value = parse(tokenize(raw));
+        if (!Number.isFinite(value)) throw new Error("Lỗi");
+        state.ans = value;
+        state.result = format(value);
+        state.error = false;
+        state.overwrite = true;
+      } catch (_) {
+        state.result = "Lỗi";
+        state.error = true;
+        state.overwrite = true;
+      }
+      state.shift = false;
+      flash();
+      render();
+    }
+
+    function applyFn(name) {
+      const shifted = state.shift;
+      const map = {
+        sin: shifted ? "asin(" : "sin(",
+        cos: shifted ? "acos(" : "cos(",
+        tan: shifted ? "atan(" : "tan(",
+        log: shifted ? "10^(" : "log(",
+        ln: shifted ? "exp(" : "ln(",
+        sqrt: shifted ? "cbrt(" : "√(",
+        sqr: shifted ? "^3" : "^2",
+        pow: shifted ? "^(1/" : "^",
+        inv: shifted ? "!" : "^(-1)",
+      };
+      insert(map[name] || "");
+    }
+
+    function pressVisual(btn) {
+      btn.classList.add("pressed");
+      setTimeout(() => btn.classList.remove("pressed"), 90);
+    }
+
+    function handle(btn) {
+      const act = btn.dataset.act;
+      const fn = btn.dataset.fn;
+      const text = btn.dataset.insert;
+      beep();
+      pressVisual(btn);
+
+      if (act === "shift") {
+        state.shift = !state.shift;
+        render();
+        return;
+      }
+      if (act === "deg") {
+        state.deg = !state.deg;
+        state.shift = false;
+        render();
+        return;
+      }
+      if (act === "ac") {
+        state.expr = "";
+        state.result = "0";
+        state.shift = false;
+        state.error = false;
+        state.overwrite = true;
+        flash();
+        render();
+        return;
+      }
+      if (act === "del") {
+        if (state.error || state.overwrite) return;
+        state.expr = state.expr.slice(0, -1);
+        state.result = state.expr || "0";
+        render();
+        return;
+      }
+      if (act === "eq") {
+        evaluate();
+        return;
+      }
+      if (act === "ans") {
+        insert("Ans");
+        return;
+      }
+      if (act === "neg") {
+        insert("(-");
+        return;
+      }
+      if (text === "π" && state.shift) {
+        insert("e");
+        return;
+      }
+      if (fn) {
+        applyFn(fn);
+        return;
+      }
+      if (text) insert(text);
+    }
+
+    document.getElementById("calc").addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      handle(btn);
+    });
+
+    const keyMap = {
+      Enter: "[data-act=eq]",
+      "=": "[data-act=eq]",
+      Backspace: "[data-act=del]",
+      Escape: "[data-act=ac]",
+      Delete: "[data-act=ac]",
+      "+": "[data-insert='+']",
+      "-": "[data-insert='−']",
+      "*": "[data-insert='×']",
+      "/": "[data-insert='÷']",
+      "%": "[data-insert='%']",
+      "(": "[data-insert='(']",
+      ")": "[data-insert=')']",
+      ".": "[data-insert='.']",
+      "^": "[data-fn=pow]",
+      p: "[data-insert='π']",
+      e: "[data-insert='e']",
+    };
+
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      let sel = keyMap[e.key];
+      if (!sel && /^[0-9]$/.test(e.key)) sel = `[data-insert="${e.key}"]`;
+      if (!sel) return;
+      const btn = document.querySelector(sel);
+      if (!btn) return;
+      e.preventDefault();
+      handle(btn);
+    });
+
+    render();
+  </script>
+</body>
+</html>
