@@ -5,27 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Máy tính Casio Online - fx-580VN X & 570VN PLUS</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
+            background-color: #121212;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: #fff;
         }
+        .main-container {
+            display: flex;
+            gap: 15px;
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            max-width: 900px;
+            width: 100%;
+        }
+        /* Side Panel (Memory & History) */
+        .side-panel {
+            width: 240px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #3d3d3d;
+        }
+        .side-panel h3 {
+            font-size: 14px;
+            margin: 0 0 10px 0;
+            color: #3498db;
+            border-bottom: 1px solid #3d3d3d;
+            padding-bottom: 5px;
+        }
+        .memory-list {
+            font-size: 13px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .memory-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px dashed #3d3d3d;
+        }
+
+        /* Calculator Wrapper */
+        .calculator-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Model Switcher Tabs */
+        .model-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            background: #2a2a2a;
+            padding: 5px;
+            border-radius: 6px;
+        }
+        .tab-btn {
+            background: #333;
+            color: #ccc;
+            border: none;
+            padding: 5px 10px;
+            font-size: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .tab-btn.active {
+            background: #27ae60;
+            color: white;
+        }
+
+        /* Calculator Body */
         .calculator {
             background: #2c3e50;
-            width: 360px;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 340px;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             border: 2px solid #34495e;
         }
         .brand {
             color: #ecf0f1;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             margin-bottom: 5px;
             display: flex;
@@ -33,117 +108,147 @@
         }
         .screen {
             background: #c8d6e5;
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border: 2px inset #8395a7;
             text-align: right;
-            min-height: 50px;
+            min-height: 45px;
         }
         .expression {
-            font-size: 14px;
+            font-size: 12px;
             color: #222;
-            height: 20px;
+            height: 18px;
             overflow: hidden;
         }
         .result {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: #111;
         }
         .keypad {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
         .btn {
-            padding: 12px;
-            font-size: 15px;
+            padding: 10px;
+            font-size: 13px;
             font-weight: bold;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             background: #f1f2f6;
             color: #2f3640;
-            box-shadow: 0 3px #dcdde1;
+            box-shadow: 0 2px #dcdde1;
             transition: all 0.1s ease;
         }
         .btn:active {
             transform: translateY(2px);
-            box-shadow: 0 1px #dcdde1;
+            box-shadow: none;
         }
         .btn-sci {
             background: #718093;
             color: #fff;
-            box-shadow: 0 3px #57606f;
+            box-shadow: 0 2px #57606f;
         }
         .btn-op {
             background: #e67e22;
             color: white;
-            box-shadow: 0 3px #d35400;
+            box-shadow: 0 2px #d35400;
         }
         .btn-ac {
             background: #e74c3c;
             color: white;
-            box-shadow: 0 3px #c0392b;
+            box-shadow: 0 2px #c0392b;
         }
         .btn-eq {
             background: #27ae60;
             color: white;
-            box-shadow: 0 3px #219653;
+            box-shadow: 0 2px #219653;
+        }
+
+        @media(max-width: 768px) {
+            .main-container { flex-direction: column; align-items: center; }
+            .side-panel { width: 100%; max-width: 340px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="calculator">
-        <div class="brand">
-            <span>CASIO fx-580VN X</span>
-            <span>NATURAL-V.P.A.P.</span>
+    <div class="main-container">
+        <!-- Left Side Panel (Biến nhớ / Lịch sử) -->
+        <div class="side-panel">
+            <h3>Biến nhớ (Memory)</h3>
+            <div class="memory-list">
+                <div class="memory-item"><span>A =</span> <span>0</span></div>
+                <div class="memory-item"><span>B =</span> <span>0</span></div>
+                <div class="memory-item"><span>C =</span> <span>0</span></div>
+                <div class="memory-item"><span>Ans =</span> <span id="ans-display">0</span></div>
+            </div>
         </div>
-        
-        <div class="screen">
-            <div class="expression" id="expression"></div>
-            <div class="result" id="result">0</div>
-        </div>
 
-        <div class="keypad">
-            <button class="btn btn-sci" onclick="appendValue('sin(')">sin</button>
-            <button class="btn btn-sci" onclick="appendValue('cos(')">cos</button>
-            <button class="btn btn-sci" onclick="appendValue('tan(')">tan</button>
-            <button class="btn btn-ac" onclick="clearAll()">AC</button>
+        <!-- Calculator Center Wrapper -->
+        <div class="calculator-wrapper">
+            <!-- Model Switcher Tabs -->
+            <div class="model-tabs">
+                <button class="tab-btn active" onclick="switchModel('580VN X', event)">580VN X</button>
+                <button class="tab-btn" onclick="switchModel('570VN PLUS', event)">570VN PLUS</button>
+                <button class="tab-btn" onclick="switchModel('580EX', event)">580EX</button>
+            </div>
 
-            <button class="btn btn-sci" onclick="appendValue('log(')">log</button>
-            <button class="btn btn-sci" onclick="appendValue('ln(')">ln</button>
-            <button class="btn btn-sci" onclick="appendValue('Math.sqrt(')">√</button>
-            <button class="btn btn-sci" onclick="deleteChar()">DEL</button>
+            <div class="calculator">
+                <div class="brand">
+                    <span id="model-title">CASIO fx-580VN X</span>
+                    <span>NATURAL-V.P.A.P.</span>
+                </div>
+                
+                <div class="screen">
+                    <div class="expression" id="expression"></div>
+                    <div class="result" id="result">0</div>
+                </div>
 
-            <button class="btn" onclick="appendValue('7')">7</button>
-            <button class="btn" onclick="appendValue('8')">8</button>
-            <button class="btn" onclick="appendValue('9')">9</button>
-            <button class="btn btn-op" onclick="appendValue('/')">÷</button>
+                <div class="keypad">
+                    <button class="btn btn-sci" onclick="appendValue('sin(')">sin</button>
+                    <button class="btn btn-sci" onclick="appendValue('cos(')">cos</button>
+                    <button class="btn btn-sci" onclick="appendValue('tan(')">tan</button>
+                    <button class="btn btn-ac" onclick="clearAll()">AC</button>
 
-            <button class="btn" onclick="appendValue('4')">4</button>
-            <button class="btn" onclick="appendValue('5')">5</button>
-            <button class="btn" onclick="appendValue('6')">6</button>
-            <button class="btn btn-op" onclick="appendValue('*')">×</button>
+                    <button class="btn btn-sci" onclick="appendValue('log(')">log</button>
+                    <button class="btn btn-sci" onclick="appendValue('ln(')">ln</button>
+                    <button class="btn btn-sci" onclick="appendValue('Math.sqrt(')">√</button>
+                    <button class="btn btn-sci" onclick="deleteChar()">DEL</button>
 
-            <button class="btn" onclick="appendValue('1')">1</button>
-            <button class="btn" onclick="appendValue('2')">2</button>
-            <button class="btn" onclick="appendValue('3')">3</button>
-            <button class="btn btn-op" onclick="appendValue('-')">-</button>
+                    <button class="btn" onclick="appendValue('7')">7</button>
+                    <button class="btn" onclick="appendValue('8')">8</button>
+                    <button class="btn" onclick="appendValue('9')">9</button>
+                    <button class="btn btn-op" onclick="appendValue('/')">÷</button>
 
-            <button class="btn" onclick="appendValue('0')">0</button>
-            <button class="btn" onclick="appendValue('.')">.</button>
-            <button class="btn btn-eq" onclick="calculate()">=</button>
-            <button class="btn btn-op" onclick="appendValue('+')">+</button>
+                    <button class="btn" onclick="appendValue('4')">4</button>
+                    <button class="btn" onclick="appendValue('5')">5</button>
+                    <button class="btn" onclick="appendValue('6')">6</button>
+                    <button class="btn btn-op" onclick="appendValue('*')">×</button>
+
+                    <button class="btn" onclick="appendValue('1')">1</button>
+                    <button class="btn" onclick="appendValue('2')">2</button>
+                    <button class="btn" onclick="appendValue('3')">3</button>
+                    <button class="btn btn-op" onclick="appendValue('-')">-</button>
+
+                    <button class="btn" onclick="appendValue('0')">0</button>
+                    <button class="btn" onclick="appendValue('.')">.</button>
+                    <button class="btn btn-eq" onclick="calculate()">=</button>
+                    <button class="btn btn-op" onclick="appendValue('+')">+</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         let currentExpr = "";
+        let lastAns = "0";
         const exprEl = document.getElementById('expression');
         const resEl = document.getElementById('result');
+        const ansDisplay = document.getElementById('ans-display');
 
         function appendValue(val) {
             currentExpr += val;
@@ -163,15 +268,22 @@
 
         function calculate() {
             try {
-                // Safely evaluate the expression
                 let evalString = currentExpr
                     .replace(/×/g, '*')
                     .replace(/÷/g, '/');
                 let result = eval(evalString);
                 resEl.innerText = result;
+                lastAns = result;
+                ansDisplay.innerText = result;
             } catch (error) {
                 resEl.innerText = "Lỗi";
             }
+        }
+
+        function switchModel(modelName, event) {
+            document.getElementById('model-title').innerText = "CASIO fx-" + modelName;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
         }
     </script>
 
