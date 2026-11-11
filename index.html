@@ -4,16 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Máy Tính Casio Online - Giả Lập Máy Tính Cầm Tay Tốt Nhất</title>
+    <style>
+        body { background: #121212; color: #fff; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; margin: 0; padding: 20px; }
+        .calculator { background: #1e1e1e; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 320px; margin-bottom: 30px; }
+        #display { width: 100%; height: 50px; font-size: 24px; text-align: right; margin-bottom: 15px; padding: 5px; background: #2c2c2c; color: #fff; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; }
+        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        button { padding: 15px; font-size: 18px; cursor: pointer; background: #333; color: #fff; border: none; border-radius: 6px; transition: 0.2s; }
+        button:hover { background: #444; }
+        button.operator { background: #e67e22; }
+        button.operator:hover { background: #d35400; }
+        button.function { background: #2980b9; }
+        button.function:hover { background: #2471a3; }
+        button.ac { background: #c0392b; }
+        button.ac:hover { background: #a93226; }
+    </style>
 </head>
-<body style="background: #121212; color: #fff; margin: 0; padding: 20px;">
+<body>
 
-    <!-- Yahan aapka calculator ka HTML design aur display hoga -->
-    <div style="text-align: center; margin-bottom: 20px;">
-        <input type="text" id="display" style="width: 250px; height: 40px; font-size: 20px; text-align: right;" disabled>
+    <!-- Asal Casio Calculator Design -->
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button class="function" onclick="calculateSin()">sin</button>
+            <button class="function" onclick="calculateCos()">cos</button>
+            <button class="function" onclick="calculateSquare()">x²</button>
+            <button class="ac" onclick="clearDisplay()">AC</button>
+            
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">-</button>
+
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('*')">*</button>
+
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="operator" onclick="appendValue('/')">/</button>
+            <button class="operator" onclick="appendValue('=')">=</button>
+        </div>
     </div>
 
+    <!-- JavaScript Functions -->
     <script>
-    // Calculator safe scientific and basic calculation functions
     function appendValue(val) {
         let display = document.getElementById("display");
         if (display) display.value += val;
@@ -60,46 +100,10 @@
     }
     </script>
 
-    <!-- FULL SEO OPTIMIZED CONTENT SECTION (TOP 1 RANKING MASTER) -->
+    <!-- FULL SEO OPTIMIZED CONTENT SECTION -->
     <section class="seo-content-section" style="max-width: 900px; margin: 40px auto; padding: 25px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.7; background: #1e1e1e; border-radius: 12px; border: 1px solid #333;">
-        
         <h1 style="font-size: 26px; color: #3498db; margin-bottom: 15px;">Máy Tính Casio Online - Giả Lập Máy Tính Cầm Tay Tốt Nhất Hiện Nay</h1>
-        <p>Chào mừng bạn đến với công cụ <strong>máy tính casio online</strong> hàng đầu, nơi cung cấp giải pháp <strong>máy tính online casio</strong> mượt mà và chuẩn xác nhất. Nếu bạn đang tìm kiếm một chiếc <strong>máy tính casio 580</strong>, <strong>máy tính casio fx-580vn plus</strong> hay dòng <strong>máy tính casio 880 online</strong> mới nhất để giải toán nhanh chóng, trang web của chúng tôi chính là lựa chọn hoàn hảo. Hệ thống <strong>giả lập máy tính casio</strong> trực tuyến giúp bạn giải quyết mọi bài toán từ cơ bản đến nâng cao ngay trên trình duyệt web hoặc điện thoại mà không cần tải ứng dụng rườm rà.</p>
-
-        <h2 style="font-size: 20px; color: #2ecc71; margin-top: 25px; margin-bottom: 10px;">Các Dòng Máy Tính Casio Online Phổ Biến Nhất</h2>
-        <p>Công cụ của chúng tôi tích hợp đa dạng các dòng <strong>máy tính cầm tay online</strong> thông dụng, phục vụ đắc lực cho học sinh, sinh viên và giáo viên:</p>
-        <ul style="padding-left: 20px; margin-bottom: 20px;">
-            <li><strong>Máy tính casio 580 / casio fx 580:</strong> Dòng máy quốc dân hỗ trợ tính năng vượt trội, tốc độ xử lý nhanh, nay đã có sẵn bản <strong>máy tính casio 580 online</strong> và <strong>casio 580 online</strong> cực tiện lợi.</li>
-            <li><strong>Máy tính casio fx-580vn:</strong> Mô phỏng chi tiết từng phím bấm và thuật toán của dòng <strong>máy tính casio fx 580vn</strong> chính hãng.</li>
-            <li><strong>Máy tính casio 570 / máy tính casio 570 online:</strong> Hỗ trợ đắc lực cho các khối lớp trung học với giao diện <strong>máy tính onl</strong> thân thiện, dễ thao tác.</li>
-            <li><strong>Máy tính casio fx 880 / máy tính casio 880 online:</strong> Cập nhật công nghệ tính toán tiên tiến, đáp ứng trọn vẹn nhu cầu học tập thời đại số.</li>
-        </ul>
-
-        <h2 style="font-size: 20px; color: #2ecc71; margin-top: 25px; margin-bottom: 10px;">Ưu Điểm Nổi Bật Khi Sử Dụng Web Máy Tính Casio</h2>
-        <p>Việc sử dụng <strong>máy tính casio web</strong> thay thế cho các thiết bị cầm tay mang lại nhiều giá trị thiết thực:</p>
-        <ul style="padding-left: 20px; margin-bottom: 20px;">
-            <li><strong>Chính xác tuyệt đối:</strong> Thuật toán lập trình mô phỏng chuẩn xác từng chức năng của các dòng <strong>máy tính casio fx-580vnx chính hãng</strong>.</li>
-            <li><strong>Tiện lợi trên mọi thiết bị:</strong> Dễ dàng trải nghiệm <strong>mays tinhs online casio</strong> trên máy tính xách tay hoặc điện thoại thông minh mọi lúc, mọi nơi.</li>
-            <li><strong>Hoàn toàn miễn phí:</strong> Không mất phí mua thiết bị, không cần tìm kiếm các bản cài đặt phức tạp, chỉ cần truy cập là có thể sử dụng ngay <strong>máy tính online</strong>.</li>
-        </ul>
-
-        <h2 style="font-size: 20px; color: #2ecc71; margin-top: 30px; margin-bottom: 15px;">Câu Hỏi Thường Gặp (FAQs)</h2>
-        
-        <div style="margin-bottom: 15px;">
-            <h3 style="font-size: 16px; color: #3498db; margin-bottom: 5px;">1. Sử dụng máy tính casio 580 online có cần cài đặt phần mềm không?</h3>
-            <p style="margin: 0;">Hoàn toàn không! Bạn có thể sử dụng trực tiếp bản <strong>máy tính casio fx-580vn online</strong> và <strong>casio fx 580 online</strong> ngay trên trình duyệt web một cách mượt mà.</p>
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <h3 style="font-size: 16px; color: #3498db; margin-bottom: 5px;">2. Trang web có hỗ trợ giả lập máy tính casio fx-580vn plus không?</h3>
-            <p style="margin: 0;">Có, hệ thống tích hợp đầy đủ giao diện giả lập cho dòng <strong>máy tính casio fx-580vn plus</strong> cùng các dòng 570, 880 đời mới.</p>
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <h3 style="font-size: 16px; color: #3498db; margin-bottom: 5px;">3. Tôi có thể tìm kiếm các dòng máy tính casio tốt nhất ở đâu?</h3>
-            <p style="margin: 0;">Trang web của chúng tôi tự hào là công cụ <strong>máy tính casio tốt nhất</strong> phục vụ nhu cầu học tập, giải toán nhanh cho cộng đồng học sinh, sinh viên Việt Nam.</p>
-        </div>
-
+        <p>Chào mừng bạn đến với công cụ <strong>máy tính casio online</strong> hàng đầu, nơi cung cấp giải pháp <strong>máy tính online casio</strong> mượt mà và chuẩn xác nhất.</p>
     </section>
 
 </body>
