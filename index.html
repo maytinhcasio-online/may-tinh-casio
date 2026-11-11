@@ -288,7 +288,7 @@
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
         }
-    </script>
+        <script>
 // Calculator safe scientific and basic calculation functions
 function appendValue(val) {
     let display = document.getElementById("display");
@@ -318,7 +318,6 @@ function calculateSin() {
     if (isNaN(val)) {
         display.value = "Error";
     } else {
-        // Degree ko radians mein convert karke sin nikalna
         let radians = val * (Math.PI / 180);
         display.value = Math.sin(radians);
     }
@@ -334,6 +333,10 @@ function calculateCos() {
         let radians = val * (Math.PI / 180);
         display.value = Math.cos(radians);
     }
+}
+</script>
+
+
 }
     <!-- FULL SEO OPTIMIZED CONTENT SECTION (TOP 1 RANKING MASTER) -->
     <section class="seo-content-section" style="max-width: 900px; margin: 40px auto; padding: 25px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.7; background: #1e1e1e; border-radius: 12px; border: 1px solid #333;">
